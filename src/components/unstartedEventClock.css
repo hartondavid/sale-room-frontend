@@ -1,0 +1,43 @@
+.unstarted-event-clock {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.unstarted-event-clock-digit {
+  background: rgb(133, 20, 20);
+  color: #fff;
+  border-radius: 6px;
+  margin: 0 2px;
+  width: 32px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+  position: relative;
+  overflow: hidden;
+  font-size: 2rem;
+  font-weight: bold;
+  animation: flip 0.7s;
+  padding: 10px;
+}
+
+.unstarted-event-clock-separator {
+
+  color: rgb(133, 20, 20);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+@keyframes unstarted-event-clock-flip {
+  0% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}

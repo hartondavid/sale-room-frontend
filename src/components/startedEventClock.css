@@ -1,0 +1,42 @@
+.started-event-clock {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.started-event-clock-digit {
+  background: rgb(202, 25, 25);
+  color: #fff;
+  border-radius: 6px;
+  margin: 0 2px;
+  width: 32px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+  position: relative;
+  overflow: hidden;
+  font-size: 2rem;
+  font-weight: bold;
+  animation: flip 0.7s;
+  padding: 10px;
+}
+
+.started-event-clock-separator {
+  color: rgb(202, 25, 25);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+@keyframes started-event-clock-flip {
+  0% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
