@@ -7,7 +7,6 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import StoreIcon from '@mui/icons-material/Store';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
 export const menus = [
 
     {
@@ -138,5 +137,6 @@ export const menus = [
 
         ]
     },
+
 
 ]

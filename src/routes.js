@@ -1,5 +1,5 @@
 import Login from "./views/Login.js";
-import Dashboard from "./layouts/Dashboard.js";
+import Dashboard from "./views/dashboard/Index.js";
 import Products from "./views/dashboard/Products.js";
 import CreateEditProduct from "./views/dashboard/CreateEditProduct.js";
 import AllProducts from "./views/dashboard/AllProducts.js";
@@ -11,6 +11,8 @@ import ShoppingCard from "./views/dashboard/ShoppingCard.js";
 import Orders from "./views/dashboard/Orders.js";
 import CreateOrder from "./views/dashboard/CreateOrder.js";
 import FinishedOffers from "./views/dashboard/FinishedOffers.js";
+import Register from "./views/Register.js";
+
 var routes = [
   {
     path: "/login",
@@ -20,10 +22,17 @@ var routes = [
     layout: "/auth",
   },
   {
-    path: "/index",
-    name: "Login",
+    path: "/register",
+    name: "Register",
     icon: "ni ni-key-25 text-info",
-    component: AllProducts,
+    component: <Register />,
+    layout: "/auth",
+  },
+  {
+    path: "/index",
+    name: "Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: Dashboard,
     layout: "/dashboard",
   },
   {

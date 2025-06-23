@@ -61,8 +61,8 @@ const CreateEditProduct = ({
             description: data.description || '',
             photo: data.photo ? `${process.env.REACT_APP_API_URL}/${data.photo}` : null,
             status: data.status || 'active',
-            startTime: toDatetimeLocal(data.date_start),
-            endTime: toDatetimeLocal(data.date_end),
+            startTime: toDatetimeLocal(data.start_date),
+            endTime: toDatetimeLocal(data.end_date),
         });
     }
 
@@ -124,8 +124,8 @@ const CreateEditProduct = ({
             name: formData.name,
             initial_price: formData.initial_price,
             description: formData.description,
-            date_start: toUTCISOString(formData.startTime),
-            date_end: toUTCISOString(formData.endTime),
+            start_date: toUTCISOString(formData.startTime),
+            end_date: toUTCISOString(formData.endTime),
         };
 
         if (fileForImagePath) {

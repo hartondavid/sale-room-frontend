@@ -136,7 +136,7 @@ export const apiRemoveAllProductFromCart = async (successCallback, errorCallback
 
         const data = await response.json();
         if (!data.success) {
-            errorCallback(data.message);
+            // errorCallback(data.message);
         } else {
             successCallback(data);
         }

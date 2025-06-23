@@ -131,7 +131,7 @@ const Login = () => {
                     width: '20%', margin: 'auto',
                     marginTop: '100px', backgroundColor: 'white', padding: '20px', borderRadius: '10px'
                 }}>
-                    <Typography variant="h3">Intra in cont</Typography>
+                    <Typography variant="h4">Intra in cont</Typography>
                     <TextField
                         fullWidth
                         margin="normal"
@@ -159,8 +159,11 @@ const Login = () => {
                     control={<Checkbox name="rememberMe" />}
                     label={t('remember-me')}
                 /> */}
-                    <Button variant="contained" sx={{ backgroundColor: 'rgb(133, 20, 20)', color: 'white' }} fullWidth onClick={login}>
+                    <Button variant="contained" sx={{ backgroundColor: 'rgb(133, 20, 20)', color: 'white', mb: 1, mt: 1 }} fullWidth onClick={login}>
                         {'login'}
+                    </Button>
+                    <Button variant="outlined" sx={{ color: 'rgb(133, 20, 20)', borderColor: 'rgb(133, 20, 20)' }} fullWidth onClick={() => navigate('/auth/register')}>
+                        {'Inregistreaza-te'}
                     </Button>
                 </Box>
             </div>

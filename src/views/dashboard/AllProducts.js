@@ -15,7 +15,7 @@ const AllProducts = () => {
         apiGetAllProducts(
             (response) => {
                 if (response.data) {
-                    console.log('response', response);
+
                     setData(response.data);
                 }
             },

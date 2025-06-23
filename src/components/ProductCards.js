@@ -29,7 +29,7 @@ import StartedEventClock from './StartedEventClock'; // adjust path as needed
 import { apiCreateCart, apiAddProductToCart, apiGetCartIdByUserId } from "../api/carts";
 import UnstartedEventClock from './UnstartedEventClock';
 import { apiGetUserRights } from '../api/rights';
-import { apiIncreaseProductPrice } from '../api/products';
+import { apiIncreaseProductPrice, apiGetAllProducts } from '../api/products';
 import { addStyleToTextField } from '../utils/utilFunctions';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
@@ -138,8 +138,15 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
         }
 
 
-        apiIncreaseProductPrice((response) => { navigate(-1); showSuccessToast(response.message) }, showErrorToast, productId, formData)
+        apiIncreaseProductPrice((response) => {
 
+            showSuccessToast(response.message);
+
+            apiGetAllProducts((response) => {
+                setProducts(response.data);
+            }, showErrorToast);
+        }, showErrorToast, productId, formData)
+        setOpenAddOfferDialog(false);
 
     };
 
@@ -241,24 +248,24 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                                 </Box>
 
                                 {/* '2020-01-01T00:00:00' */}
-                                {product.date_end && !isNaN(new Date(product.date_end)) &&
-                                    product.date_start && !isNaN(new Date(product.date_start)) ? (
+                                {product.end_date && !isNaN(new Date(product.end_date)) &&
+                                    product.start_date && !isNaN(new Date(product.start_date)) ? (
 
-                                    new Date() < new Date(product.date_start) && product.status === 'active' ? (
+                                    new Date() < new Date(product.start_date) && product.status === 'active' ? (
                                         <>
                                             <Typography fontWeight="bold" sx={{ mt: 2, color: '#6d071a', mb: 1 }}>
                                                 Oferta incepe in:
                                             </Typography>
-                                            <UnstartedEventClock startDate={product.date_start} />
+                                            <UnstartedEventClock startDate={product.start_date} />
 
                                         </>
-                                    ) : new Date() >= new Date(product.date_start) && new Date() <= new Date(product.date_end) ? (
+                                    ) : new Date() >= new Date(product.start_date) && new Date() <= new Date(product.end_date) ? (
                                         <>
                                             <Typography color="error" fontWeight="bold" sx={{ mt: 2, mb: 1 }}>
                                                 Oferta expira in:
                                             </Typography>
 
-                                            <StartedEventClock endDate={product.date_end} startDate={product.date_start} />
+                                            <StartedEventClock endDate={product.end_date} startDate={product.start_date} />
 
                                         </>
                                     ) : (
@@ -297,15 +304,12 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                                     )
                                 ) : null}
 
-
-
-
                                 {product.current_user_id && <Typography variant="body2" sx={{ mt: 2, fontSize: '20px', fontWeight: 'bold', color: 'black' }}>
                                     Licitat de: {product.current_user_name}
                                 </Typography>}
                             </CardContent>
                             <CardActions sx={{ justifyContent: 'flex-end', p: 2 }}>
-                                {editButton && product.initial_price === product.current_price && new Date(product.date_end) > new Date() &&
+                                {editButton && product.initial_price === product.current_price &&
                                     (
                                         <IconButton
                                             size="small"
@@ -318,7 +322,7 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                                             <EditIcon />
                                         </IconButton>
                                     )}
-                                {deleteButton && product.initial_price === product.current_price && new Date(product.date_start) > new Date() && (
+                                {deleteButton && product.initial_price === product.current_price && new Date(product.start_date) > new Date() && (
                                     <IconButton
                                         size="small"
                                         color="error"
@@ -330,7 +334,7 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                                         <DeleteIcon />
                                     </IconButton>
                                 )}
-                                {increasePriceButton && new Date() >= new Date(product.date_start) && new Date() <= new Date(product.date_end) && (
+                                {increasePriceButton && new Date() >= new Date(product.start_date) && new Date() <= new Date(product.end_date) && (
 
                                     <Button
                                         size="small"
@@ -354,7 +358,7 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                                 )}
 
 
-                                {userId === product.current_user_id && product.date_end < new Date() && product.date_start > new Date() && (<IconButton
+                                {userId === product.current_user_id && new Date(product.start_date) < new Date() && new Date(product.end_date) < new Date() && (<IconButton
                                     size="small"
                                     color="success"
                                     onClick={async (e) => {

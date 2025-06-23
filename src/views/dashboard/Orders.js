@@ -121,9 +121,7 @@ const Orders = ({ user }) => {
 
         if (cartId) {
             apiRemoveAllProductFromCart(
-                (response) => {
-                    showSuccessToast(response.message);
-                },
+                showSuccessToast,
                 showErrorToast,
                 cartId
             )

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { apiGetPurchasedProducts } from "../../api/products";
 import { showErrorToast } from "../../utils/utilFunctions";
 import GenericTable from "../../components/GenericTable";
+import dayjs from 'dayjs';
 
 const columns = [
     { field: 'name', headerName: 'Nume', type: 'string' },
@@ -18,8 +19,16 @@ const columns = [
         }
     },
     { field: 'description', headerName: 'Descriere', type: 'string' },
-    { field: 'date_start', headerName: 'Data de inceput', type: 'date' },
-    { field: 'date_end', headerName: 'Data de sfarsit', type: 'date' },
+    {
+        field: 'start_date', headerName: 'Data de inceput', type: 'date', renderCell: ({ value }) => {
+            return dayjs(value).format('DD.MM.YYYY HH:mm');
+        }
+    },
+    {
+        field: 'end_date', headerName: 'Data de sfarsit', type: 'date', renderCell: ({ value }) => {
+            return dayjs(value).format('DD.MM.YYYY HH:mm');
+        }
+    },
 
 ]
 

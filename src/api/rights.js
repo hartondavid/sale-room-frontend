@@ -35,7 +35,7 @@ export const apiGetUserRights = async (setUserRights) => {
         });
 
         const data = await response.json();
-        console.log('userRights API response:', data);
+
         if (!data.success) {
         } else {
             setUserRights(data.data)
