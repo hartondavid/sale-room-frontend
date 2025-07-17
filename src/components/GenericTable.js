@@ -157,6 +157,10 @@ const GenericTable = ({ statuses = [], title, subtitle, buttonText, buttonAction
                                                         alt="file"
                                                         style={{ maxHeight: '100px', maxWidth: '100px', cursor: 'pointer' }}
                                                         onClick={() => handleDownload(`${process.env.REACT_APP_API_URL}/${row[column.field]}`)} // Click to download
+                                                        onError={(e) => {
+                                                            console.error('Image failed to load:', `${process.env.REACT_APP_API_URL}/${row[column.field]}`);
+                                                            e.target.src = '/no-image.svg';
+                                                        }}
                                                     />
                                                 ) : (
                                                     <IconButton
@@ -214,7 +218,15 @@ const GenericTable = ({ statuses = [], title, subtitle, buttonText, buttonAction
                                                                 <TableRow key={`generic-table-child-row-${childRow.id}`}>{childrenColumns && childrenColumns.map((column) => (
                                                                     <TableCell key={`generic-table-child-column-${childRow.id}-${column.field}`}>
                                                                         {column.field === 'photo'
-                                                                            ? <img src={`${process.env.REACT_APP_API_URL}/${childRow[column.field]}`} alt={childRow.name} width={50} />
+                                                                            ? <img
+                                                                                src={`${process.env.REACT_APP_API_URL}/${childRow[column.field]}`}
+                                                                                alt={childRow.name}
+                                                                                width={50}
+                                                                                onError={(e) => {
+                                                                                    console.error('Image failed to load:', `${process.env.REACT_APP_API_URL}/${childRow[column.field]}`);
+                                                                                    e.target.src = '/no-image.svg';
+                                                                                }}
+                                                                            />
                                                                             : childRow[column.field]}
                                                                     </TableCell>
                                                                 ))}</TableRow>

@@ -110,6 +110,10 @@ const ShoppingCard = ({ user }) => {
                 <Box
                   component="img"
                   src={item.photo ? `${process.env.REACT_APP_API_URL}/${item.photo}` : '/no-image.png'}
+                  onError={(e) => {
+                    console.error('Image failed to load:', `${process.env.REACT_APP_API_URL}/${item.photo}`);
+                    e.target.src = '/no-image.svg';
+                  }}
                   alt={item.name}
                   sx={{
                     width: 64,

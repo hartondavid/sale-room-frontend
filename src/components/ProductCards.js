@@ -32,6 +32,8 @@ import { apiGetUserRights } from '../api/rights';
 import { apiIncreaseProductPrice, apiGetAllProducts } from '../api/products';
 import { addStyleToTextField } from '../utils/utilFunctions';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { getImageUrl, handleImageError } from '../utils/imageUtils';
+import ImageDebug from './ImageDebug';
 
 const ProductCards = ({ products, setProducts, editButton = false, deleteButton = false, increasePriceButton = false,
     addButton = false, title = false }) => {
@@ -198,23 +200,24 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                                     boxShadow: product.status === 'inactive' ? 1 : 6,
                                     cursor: product.status === 'inactive' ? 'not-allowed' : 'pointer'
                                 }
-
                             }}
-                            onClick={
-
-                                getCardOnClick(product, editButton, navigate)}
+                            onClick={getCardOnClick(product, editButton, navigate)}
                         >
+                            {process.env.NODE_ENV === 'development' && (
+                                <ImageDebug imagePath={product.photo} />
+                            )}
 
 
                             <CardMedia
                                 component="img"
                                 height="200"
-                                image={`${process.env.REACT_APP_API_URL}/${product.photo}`}
+                                image={getImageUrl(product.photo)}
                                 alt={product.name}
                                 sx={{
                                     objectFit: 'cover',
                                     filter: product.status === 'inactive' ? 'grayscale(50%)' : 'none'
                                 }}
+                                onError={(e) => handleImageError(e, getImageUrl(product.photo))}
                             />
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography gutterBottom variant="h6" component="div" sx={{ fontSize: '20px', fontWeight: 'bold' }}>

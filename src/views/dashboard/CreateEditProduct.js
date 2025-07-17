@@ -198,6 +198,10 @@ const CreateEditProduct = ({
                                         borderRadius: '8px',
                                         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                                     }}
+                                    onError={(e) => {
+                                        console.error('Image failed to load:', formData.photo);
+                                        e.target.src = '/no-image.svg';
+                                    }}
                                 />
                                 {formData.status !== 'inactive' && (
                                     <Button
