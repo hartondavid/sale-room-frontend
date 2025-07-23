@@ -32,7 +32,7 @@ import { apiGetUserRights } from '../api/rights';
 import { apiIncreaseProductPrice, apiGetAllProducts } from '../api/products';
 import { addStyleToTextField } from '../utils/utilFunctions';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import { getImageUrl, handleImageError } from '../utils/imageUtils';
+import { getImageUrl, handleImageError, getImageSource } from '../utils/imageUtils';
 import ImageDebug from './ImageDebug';
 
 const ProductCards = ({ products, setProducts, editButton = false, deleteButton = false, increasePriceButton = false,
@@ -211,7 +211,7 @@ const ProductCards = ({ products, setProducts, editButton = false, deleteButton 
                             <CardMedia
                                 component="img"
                                 height="200"
-                                image={getImageUrl(product.photo)}
+                                image={process.env.NODE_ENV === 'development' ? product.photo : getImageUrl(product.photo)}
                                 alt={product.name}
                                 sx={{
                                     objectFit: 'cover',

@@ -8,6 +8,11 @@
  * @returns {string} The full image URL
  */
 export const getImageUrl = (imagePath) => {
+    // In development, return the local path
+    if (process.env.NODE_ENV === 'development') {
+        return imagePath || '/no-image.svg';
+    }
+
     if (!imagePath) {
         return '/no-image.svg';
     }
@@ -52,4 +57,24 @@ export const isApiUrlConfigured = () => {
 export const getImageDebugMessage = (imagePath) => {
     const apiUrl = process.env.REACT_APP_API_URL;
     return `Image loading failed. API URL: ${apiUrl || 'NOT SET'}, Image Path: ${imagePath}`;
+};
+
+/**
+ * Check if we're in development environment
+ * @returns {boolean} True if in development
+ */
+export const isDevelopment = () => {
+    return process.env.NODE_ENV === 'development';
+};
+
+/**
+ * Get the appropriate image source based on environment
+ * @param {string} imagePath - The image path
+ * @returns {string} The image source URL
+ */
+export const getImageSource = (imagePath) => {
+    if (isDevelopment()) {
+        return imagePath || '/no-image.svg';
+    }
+    return getImageUrl(imagePath);
 }; 

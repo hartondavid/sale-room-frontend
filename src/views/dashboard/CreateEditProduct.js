@@ -59,7 +59,7 @@ const CreateEditProduct = ({
             name: data.name || '',
             initial_price: data.initial_price || 0,
             description: data.description || '',
-            photo: data.photo ? `${process.env.REACT_APP_API_URL}/${data.photo}` : null,
+            photo: process.env.NODE_ENV === 'development' ? data.photo : (data.photo ? `${process.env.REACT_APP_API_URL}/${data.photo}` : null),
             status: data.status || 'active',
             startTime: toDatetimeLocal(data.start_date),
             endTime: toDatetimeLocal(data.end_date),

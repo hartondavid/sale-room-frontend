@@ -153,7 +153,7 @@ const GenericTable = ({ statuses = [], title, subtitle, buttonText, buttonAction
                                             <TableCell key={`generic-table-filepath-${column.field}`}>
                                                 {isImageFile(row[column.field]) ? (
                                                     <img
-                                                        src={`${process.env.REACT_APP_API_URL}/${row[column.field]}`}
+                                                        src={process.env.NODE_ENV === 'development' ? row[column.field] : `${process.env.REACT_APP_API_URL}/${row[column.field]}`}
                                                         alt="file"
                                                         style={{ maxHeight: '100px', maxWidth: '100px', cursor: 'pointer' }}
                                                         onClick={() => handleDownload(`${process.env.REACT_APP_API_URL}/${row[column.field]}`)} // Click to download
@@ -219,7 +219,7 @@ const GenericTable = ({ statuses = [], title, subtitle, buttonText, buttonAction
                                                                     <TableCell key={`generic-table-child-column-${childRow.id}-${column.field}`}>
                                                                         {column.field === 'photo'
                                                                             ? <img
-                                                                                src={`${process.env.REACT_APP_API_URL}/${childRow[column.field]}`}
+                                                                                src={process.env.NODE_ENV === 'development' ? childRow[column.field] : `${process.env.REACT_APP_API_URL}/${childRow[column.field]}`}
                                                                                 alt={childRow.name}
                                                                                 width={50}
                                                                                 onError={(e) => {
