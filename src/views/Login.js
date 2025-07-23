@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { storeToken } from '../utils/utilFunctions';
 
 import { useNavigate } from 'react-router-dom';
-import { showSuccessToast } from '../utils/utilFunctions';
+import { showSuccessToast, showErrorToast, isTokenValid } from '../utils/utilFunctions';
 import './login.css';
 import bgImage from "../assets/login-bg.jpg";
 import { addStyleToTextField } from "../utils/utilFunctions";
@@ -74,14 +74,24 @@ const Login = () => {
 
             if (data.message === 'Successfully logged in!') {
                 const token = response.headers.get('X-Auth-Token');
-                if (token) {
-                    storeToken(token)
-                }
-                showSuccessToast('login-success')
-                navigate('/dashboard');
+                console.log('Received token from header:', token ? token.substring(0, 20) + '...' : 'null');
 
+                if (token) {
+                    if (isTokenValid(token)) {
+                        storeToken(token);
+                        showSuccessToast('login-success');
+                        navigate('/dashboard');
+                    } else {
+                        console.error('Invalid token format received');
+                        showErrorToast('Invalid authentication token received');
+                    }
+                } else {
+                    console.error('No token received in response headers');
+                    showErrorToast('No authentication token received');
+                }
             } else {
-                showInvalidCredentials()
+                console.error('Login failed:', data);
+                showInvalidCredentials();
             }
         } catch (error) {
             console.error('Error:', error);

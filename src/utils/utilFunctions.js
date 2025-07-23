@@ -4,15 +4,63 @@ import { menus } from "./menus";
 export const NEEDS_UPDATE_STRING = 'needs_update';
 
 export const storeToken = (token) => {
-    localStorage.setItem('token', token);
+    if (!token) {
+        console.error('Attempting to store null/undefined token');
+        return;
+    }
+
+    // Clean the token (remove any extra spaces or quotes)
+    const cleanToken = token.trim().replace(/^["']|["']$/g, '');
+
+    if (!cleanToken) {
+        console.error('Token is empty after cleaning');
+        return;
+    }
+
+    console.log('Storing token:', cleanToken.substring(0, 20) + '...');
+    localStorage.setItem('token', cleanToken);
 }
 
 export const removeToken = () => {
     localStorage.removeItem('token');
+    console.log('Token removed from localStorage');
 }
 
 export const getToken = () => {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.warn('No token found in localStorage');
+        return null;
+    }
+
+    // Clean the token when retrieving
+    const cleanToken = token.trim().replace(/^["']|["']$/g, '');
+    console.log('Retrieved token:', cleanToken.substring(0, 20) + '...');
+    return cleanToken;
+}
+
+export const isTokenValid = (token) => {
+    if (!token) return false;
+
+    // Basic JWT format validation (3 parts separated by dots)
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+        console.error('Invalid JWT format: token should have 3 parts');
+        return false;
+    }
+
+    // Check if parts are not empty
+    if (!parts[0] || !parts[1] || !parts[2]) {
+        console.error('Invalid JWT format: empty parts detected');
+        return false;
+    }
+
+    return true;
+}
+
+export const clearAuthData = () => {
+    localStorage.removeItem('token');
+    console.log('All authentication data cleared');
 }
 
 export const showErrorToast = (message) => {
